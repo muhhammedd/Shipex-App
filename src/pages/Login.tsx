@@ -5,9 +5,7 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
 import { Store, Truck, ShieldCheck, LogIn, UserPlus } from "lucide-react";
-
-// قمنا بإزالة استيراد الصورة من assets لأننا سنستخدم المسار المباشر
-// import heroImage from "@assets/..." ❌
+import heroImage from "@assets/generated_images/modern_abstract_logistics_background_with_blue_geometric_shapes_and_map_lines.png";
 
 export default function AuthPage() {
   const { login } = useAuth();
@@ -100,13 +98,9 @@ export default function AuthPage() {
         <div className="absolute inset-0 bg-primary/20 backdrop-blur-[2px] z-10" />
         { }
         <img 
-          src="/login-bg.png" 
+          src={heroImage}
           alt="Logistics Background" 
           className="absolute inset-0 w-full h-full object-cover"
-          onError={(e) => {
-            // كود احتياطي في حال لم تضع الصورة بعد، سيظهر خلفية ملونة بدلاً من كسر الصفحة
-            e.currentTarget.style.display = 'none';
-          }}
         />
         <div className="relative z-20 m-12 text-white text-right">
           <div className="bg-black/20 backdrop-blur-md p-8 rounded-3xl border border-white/10">
