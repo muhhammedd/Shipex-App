@@ -1,10 +1,10 @@
 // src/pages/Tracking.tsx
 import { useParams, Link } from "react-router-dom"; // ✅ تحديث الاستيراد
-import { MOCK_SHIPMENTS } from "@/lib/data";
+import { MOCK_SHIPMENTS } from "../lib/data";
 import { motion } from "framer-motion";
 import { ArrowLeft, MapPin, Package, Truck, CheckCircle2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "../components/ui/button";
+import { cn } from "../lib/utils";
 
 export default function Tracking() {
   // ✅ استبدال useRoute بـ useParams

@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Package, Truck, Calendar, MapPin, ArrowRight } from "lucide-react";
-import { Link } from "wouter";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "react-router-dom";
+import { Badge } from "./ui/badge";
+import { Card, CardContent } from "./ui/card";
 
 export interface Shipment {
   id: string;

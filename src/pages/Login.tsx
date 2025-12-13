@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useAuth, UserRole } from "@/lib/auth"; // تأكد أن هذا المسار صحيح
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAuth, UserRole } from "../lib/auth"; // تأكد أن هذا المسار صحيح
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
 import { Store, Truck, ShieldCheck, LogIn, UserPlus } from "lucide-react";
 
 // قمنا بإزالة استيراد الصورة من assets لأننا سنستخدم المسار المباشر

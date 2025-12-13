@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { MapPin, Navigation, Phone, CheckCircle2, Clock } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { useAuth } from "@/lib/auth";
+import { Button } from "../../components/ui/button";
+import { Card, CardContent } from "../../components/ui/card";
+import { Badge } from "../../components/ui/badge";
+import { useAuth } from "../../lib/auth";
 
 export default function DriverDashboard() {
   const { logout } = useAuth();

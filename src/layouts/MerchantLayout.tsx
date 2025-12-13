@@ -1,5 +1,5 @@
-import { Link, useLocation } from "wouter";
-import { useAuth } from "@/lib/auth";
+import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../lib/auth";
 import { 
   LayoutDashboard, 
   PackagePlus, 
@@ -11,13 +11,13 @@ import {
   Menu,
   X
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "../components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "../components/ui/sheet";
 import { useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 
 export default function MerchantLayout({ children }: { children: React.ReactNode }) {
-  const [location] = useLocation();
+  const location = useLocation();
   const { logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -39,9 +39,9 @@ export default function MerchantLayout({ children }: { children: React.ReactNode
       
       <div className="flex-1 py-6 px-4 space-y-1 overflow-y-auto">
         {menuItems.map((item) => {
-          const isActive = location === item.path;
+          const isActive = location.pathname.startsWith(item.path);
           return (
-            <Link key={item.path} href={item.path}>
+            <Link key={item.path} to={item.path}>
               <div className={`
                 flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer transition-colors
                 ${isActive 

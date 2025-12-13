@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
-import { MOCK_SHIPMENTS } from "@/lib/data";
-import ShipmentCard from "@/components/ShipmentCard";
+import { MOCK_SHIPMENTS } from "../lib/data";
+import ShipmentCard from "../components/ShipmentCard";
 import { Bell, Search, Filter } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from "../components/ui/input";
+import { Button } from "../components/ui/button";
 
 export default function Home() {
   const activeShipments = MOCK_SHIPMENTS.filter(s => s.status !== "Delivered");

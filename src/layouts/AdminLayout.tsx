@@ -1,5 +1,5 @@
-import { Link, useLocation } from "wouter";
-import { useAuth } from "@/lib/auth";
+import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../lib/auth";
 import { 
   BarChart3, 
   Users, 
@@ -10,11 +10,11 @@ import {
   Building2,
   Wallet
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "../components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const [location] = useLocation();
+  const location = useLocation();
   const { logout } = useAuth();
 
   const menuItems = [

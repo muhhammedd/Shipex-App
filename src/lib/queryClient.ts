@@ -21,9 +21,9 @@ export async function apiRequest(method: string, url: string, data?: unknown) {
   return new Response(JSON.stringify({ success: true }), { status: 200 });
 }
 
-export const getQueryFn: <T>() => QueryFunction<T> = () => async ({ queryKey }) => {
+export const getQueryFn: () => QueryFunction=<T>() => async ({ queryKey }) => {
   const url = queryKey.join("/");
-  return await mockFetcher(url) as T;
+  return (await mockFetcher(url)) as unknown as T;
 };
 
 export const queryClient = new QueryClient({

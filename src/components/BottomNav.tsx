@@ -1,9 +1,9 @@
-import { Link, useLocation } from "wouter";
+import { Link, useLocation } from "react-router-dom";
 import { Home, Box, User, MapPin } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 
 export default function BottomNav() {
-  const [location] = useLocation();
+  const location = useLocation();
 
   const navItems = [
     { icon: Home, label: "Home", path: "/home" },
@@ -12,15 +12,15 @@ export default function BottomNav() {
     { icon: User, label: "Profile", path: "/profile" },
   ];
 
-  if (location === "/") return null;
+  if (location.pathname.startsWith("/")) return null;
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-lg border-t border-border p-2 pb-6 z-50 md:hidden">
       <div className="flex justify-around items-center max-w-md mx-auto">
         {navItems.map((item) => {
-          const isActive = location.startsWith(item.path);
+          const isActive = location.pathname.startsWith(item.path);
           return (
-            <Link key={item.path} href={item.path}>
+            <Link key={item.path} to={item.path}>
               <div
                 className={cn(
                   "flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-300",
