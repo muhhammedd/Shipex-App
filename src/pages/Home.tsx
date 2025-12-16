@@ -15,7 +15,7 @@ export default function Home() {
       <header className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold font-display text-foreground">Dashboard</h1>
-          <p className="text-muted-foreground">Good Morning, Alex</p>
+          <p className="text-muted-foreground">Good Morning, Mohamed</p>
         </div>
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="h-6 w-6 text-foreground" />
