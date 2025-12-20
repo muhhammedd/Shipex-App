@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { useAuth } from "../lib/auth";
+import { useAuth } from "@/lib/auth";
 import { 
   LayoutDashboard, 
   PackagePlus, 
@@ -9,7 +9,8 @@ import {
   LifeBuoy, 
   LogOut,
   Menu,
-  X
+  Settings, // أيقونة الإعدادات
+  BarChart3 // أيقونة التحليلات/الإحصائيات
 } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "../components/ui/sheet";
@@ -23,10 +24,12 @@ export default function MerchantLayout({ children }: { children: React.ReactNode
 
   const menuItems = [
     { icon: LayoutDashboard, label: "الرئيسية", path: "/merchant" },
+    { icon: BarChart3, label: "الإحصائيات", path: "/merchant/analytics" }, // تمت الإضافة
     { icon: PackagePlus, label: "إضافة شحنة", path: "/merchant/new-shipment" },
     { icon: History, label: "سجل الشحنات", path: "/merchant/history" },
     { icon: FileText, label: "الفواتير", path: "/merchant/invoices" },
     { icon: Wallet, label: "الحساب المالي", path: "/merchant/wallet" },
+    { icon: Settings, label: "الإعدادات", path: "/merchant/settings" }, // تمت الإضافة
     { icon: LifeBuoy, label: "الدعم الفني", path: "/merchant/support" },
   ];
 
@@ -36,10 +39,10 @@ export default function MerchantLayout({ children }: { children: React.ReactNode
         <h1 className="text-2xl font-bold font-display text-primary">SwiftShip</h1>
         <p className="text-sm text-muted-foreground">لوحة التاجر</p>
       </div>
-      
+
       <div className="flex-1 py-6 px-4 space-y-1 overflow-y-auto">
         {menuItems.map((item) => {
-          const isActive = location.pathname.startsWith(item.path);
+          const isActive = location.pathname === item.path;
           return (
             <Link key={item.path} to={item.path}>
               <div className={`

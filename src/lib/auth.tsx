@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom"; // ✅ استبدلنا wouter بهذا
+import { useNavigate, useLocation, BrowserRouter } from "react-router-dom";
 
 export type UserRole = "merchant" | "driver" | "admin" | null;
 
@@ -12,24 +12,25 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: ReactNode }) {
+// هذا المكون الداخلي هو الذي يستخدم الـ Hooks
+// لأنه سيكون محاطاً بـ Router من المكون الأب
+function AuthLogic({ children }: { children: ReactNode }) {
   const [role, setRole] = useState<UserRole>(null);
-  const navigate = useNavigate(); // ✅ أداة التنقل الجديدة
+  const navigate = useNavigate();
   const location = useLocation();
 
-  // (اختياري) كود للدخول التلقائي أثناء التطوير لتسريع العمل
+  // (اختياري) تفعيل الدخول التلقائي للتجربة
   // useEffect(() => {
   //   if (!role) {
-  //     console.log("Auto-logging in for dev...");
-  //     setRole("merchant"); 
+  //     console.log("Dev: Auto-logging in as merchant...");
+  //     setRole("merchant");
   //   }
   // }, []);
 
   const login = (newRole: UserRole) => {
     setRole(newRole);
 
-    // التوجيه الذكي بعد تسجيل الدخول
-    // نستخدم replace: true لكي لا يعود لصفحة الدخول عند الضغط على "رجوع"
+    // توجيه المستخدم حسب دوره
     if (newRole === "merchant") navigate("/merchant/dashboard", { replace: true });
     else if (newRole === "driver") navigate("/driver/dashboard", { replace: true });
     else if (newRole === "admin") navigate("/admin/dashboard", { replace: true });
@@ -38,13 +39,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = () => {
     setRole(null);
-    navigate("/", { replace: true }); // العودة للصفحة الرئيسية
+    navigate("/", { replace: true });
   };
 
   return (
     <AuthContext.Provider value={{ role, login, logout, isAuthenticated: !!role }}>
       {children}
     </AuthContext.Provider>
+  );
+}
+
+// هذا المكون الرئيسي الذي تستدعيه في App.tsx
+// وظيفته فقط توفير بيئة Router للمكون الداخلي
+export function AuthProvider({ children }: { children: ReactNode }) {
+  return (
+    <BrowserRouter>
+      <AuthLogic>{children}</AuthLogic>
+    </BrowserRouter>
   );
 }
 
