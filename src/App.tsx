@@ -1,46 +1,231 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "./lib/queryClient";
-import { AuthProvider, useAuth } from "./lib/auth";
-import { Toaster } from "./components/ui/toaster";
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './contexts/AuthContext';
+import { ProtectedRoute } from './components/ProtectedRoute';
 
-// استيراد صفحة الدخول (النسخة العربية الجديدة)
-import LoginPage from "./pages/Login";
+// Pages
+import Login from './pages/Login';
+import Unauthorized from './pages/Unauthorized';
+import NotFound from './pages/not-found';
 
-// استيراد الصفحات الأخرى
-import Home from "./pages/Home";
-import NotFound from "./pages/not-found";
+// Merchant Pages
+import MerchantDashboard from './pages/merchant/Dashboard';
+import OrdersList from './pages/merchant/OrdersList';
+import CreateOrder from './pages/merchant/CreateOrder';
+import OrderDetails from './pages/merchant/OrderDetails';
+import MerchantAccounts from './pages/merchant/Accounts';
+import MerchantInvoices from './pages/merchant/Invoices';
 
-import MerchantLayout from "./layouts/MerchantLayout";
-import MerchantDashboard from "./pages/merchant/Dashboard";
+// Courier Pages
+import CourierDashboard from './pages/courier/Dashboard';
+import TasksList from './pages/courier/TasksList';
+import TaskDetails from './pages/courier/TaskDetails';
 
-function Router() {
-  const { isAuthenticated } = useAuth();
+// Admin Pages
+import AdminDashboard from './pages/admin/Dashboard';
+import UsersManagement from './pages/admin/UsersManagement';
+import OrdersManagement from './pages/admin/OrdersManagement';
+
+// Global Pages
+import SettingsPage from './pages/Settings';
+import SupportPage from './pages/Support';
+
+const AppRoutes = () => {
+  const { isAuthenticated, user } = useAuth();
+
+  const getHomeRoute = () => {
+    if (!isAuthenticated || !user) return '/login';
+    return `/${user.role}/dashboard`;
+  };
 
   return (
     <Routes>
-      {/* صفحة الدخول هي الصفحة الرئيسية إذا لم يكن مسجلاً */}
-      <Route path="/" element={!isAuthenticated ? <LoginPage /> : <Navigate to="/home" />} />
-      <Route path="/login" element={<LoginPage />} />
+      {/* Public Routes */}
+      <Route path="/" element={<Navigate to={getHomeRoute()} replace />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/unauthorized" element={<Unauthorized />} />
+      <Route path="/404" element={<NotFound />} />
 
-      {/* الصفحة الرئيسية بعد الدخول */}
-      <Route path="/home" element={isAuthenticated ? <Home /> : <Navigate to="/" />} />
+      {/* Merchant Routes */}
+      <Route
+        path="/merchant/dashboard"
+        element={
+          <ProtectedRoute allowedRoles={['merchant']}>
+            <MerchantDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/merchant/orders"
+        element={
+          <ProtectedRoute allowedRoles={['merchant']}>
+            <OrdersList />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/merchant/orders/new"
+        element={
+          <ProtectedRoute allowedRoles={['merchant']}>
+            <CreateOrder />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/merchant/orders/:id"
+        element={
+          <ProtectedRoute allowedRoles={['merchant']}>
+            <OrderDetails />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/merchant/accounts"
+        element={
+          <ProtectedRoute allowedRoles={['merchant']}>
+            <MerchantAccounts />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/merchant/invoices"
+        element={
+          <ProtectedRoute allowedRoles={['merchant']}>
+            <MerchantInvoices />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/merchant/settings"
+        element={
+          <ProtectedRoute allowedRoles={['merchant']}>
+            <SettingsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/merchant/support"
+        element={
+          <ProtectedRoute allowedRoles={['merchant']}>
+            <SupportPage />
+          </ProtectedRoute>
+        }
+      />
 
-      {/* صفحة الخطأ */}
-      <Route path="*" element={<NotFound />} />
+      {/* Courier Routes */}
+      <Route
+        path="/courier/dashboard"
+        element={
+          <ProtectedRoute allowedRoles={['courier']}>
+            <CourierDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/courier/tasks"
+        element={
+          <ProtectedRoute allowedRoles={['courier']}>
+            <TasksList />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/courier/tasks/:id"
+        element={
+          <ProtectedRoute allowedRoles={['courier']}>
+            <TaskDetails />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/courier/settings"
+        element={
+          <ProtectedRoute allowedRoles={['courier']}>
+            <SettingsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/courier/support"
+        element={
+          <ProtectedRoute allowedRoles={['courier']}>
+            <SupportPage />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Admin Routes */}
+      <Route
+        path="/admin/dashboard"
+        element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/users"
+        element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <UsersManagement />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/orders"
+        element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <OrdersManagement />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/orders/:id"
+        element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <OrderDetails />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/users/:id"
+        element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <div className="p-8">
+              <h1 className="text-2xl font-bold">User Details (Read-Only)</h1>
+              <p>User ID: {':id'}</p>
+            </div>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/settings"
+        element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <SettingsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/support"
+        element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <SupportPage />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Catch all - Redirect to 404 */}
+      <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
   );
-}
+};
 
-function App() {
+const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <Router />
-        <Toaster />
-      </AuthProvider>
-    </QueryClientProvider>
+    <Router>
+      <AppRoutes />
+    </Router>
   );
-}
+};
 
 export default App;

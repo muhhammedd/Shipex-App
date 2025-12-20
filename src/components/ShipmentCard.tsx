@@ -23,7 +23,7 @@ export default function ShipmentCard({ shipment }: { shipment: Shipment }) {
   };
 
   return (
-    <Link href={`/tracking/${shipment.id}`}>
+    <Link to={`/tracking/${shipment.id}`}>
       <motion.div
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}

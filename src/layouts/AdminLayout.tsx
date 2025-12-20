@@ -37,9 +37,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         
         <div className="flex-1 py-6 space-y-2 overflow-y-auto px-3">
           {menuItems.map((item) => {
-            const isActive = location === item.path;
+            const isActive = location.pathname === item.path;
             return (
-              <Link key={item.path} href={item.path}>
+              <Link key={item.path} to={item.path}>
                 <div className={`
                   flex items-center gap-3 px-3 py-3 rounded-lg cursor-pointer transition-all duration-200
                   ${isActive 
