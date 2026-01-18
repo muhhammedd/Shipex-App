@@ -1,0 +1,222 @@
+📄 PRD – Product Requirements Document
+
+مشروع: Shipex – Shipping Management System
+
+النسخة: MVP (Initial Market Validation)
+
+⸻
+
+1. هدف النسخة MVP
+
+الهدف الأساسي
+
+اختبار:
+	•	صلاحية الفكرة في السوق
+	•	تدفق العمليات داخل شركة شحن
+	•	تقبل المستخدم (صاحب الشركة / الموظف الإداري)
+
+❌ ليس الهدف:
+	•	الكمال
+	•	الأداء العالي جدًا
+	•	دعم آلاف الشركات
+
+⸻
+
+2. الفئة المستهدفة في الـ MVP
+
+المستخدمون المسموح لهم:
+	1.	Owner (صاحب شركة الشحن)
+	2.	Admin / Staff (موظف إداري)
+
+🚫 غير مدعوم في MVP:
+	•	تطبيق مندوب
+	•	تطبيق تاجر
+	•	Integrations خارجية مع شركات أخرى
+
+⸻
+
+3. نطاق النظام (Scope)
+
+ما سيتم تنفيذه
+	•	Web Dashboard فقط
+	•	CRUD كامل للعمليات الأساسية
+	•	ربط كامل مع الـ Backend الحالي
+
+ما لن يتم تنفيذه الآن
+	•	Mobile Apps
+	•	Payments
+	•	AI Optimization
+	•	Advanced Analytics
+	•	Multi-Country Logic
+
+⸻
+
+4. Tech Stack (مقترح لك)
+
+Frontend
+	•	Next.js
+	•	UI Library:
+	•	Ant Design أو MUI
+	•	State Management:
+	•	React Query / TanStack
+	•	Auth:
+	•	JWT (متصل بالـ Backend)
+
+Backend
+	•	الموجود لديك حاليًا (No Changes)
+
+⸻
+
+5. Roles & Permissions (MVP)
+
+1️⃣ Owner
+	•	إدارة كل شيء
+	•	إضافة مستخدمين
+	•	الاطلاع على التقارير
+
+2️⃣ Admin / Staff
+	•	إدارة الشحنات
+	•	إدارة العملاء
+	•	تحديث حالات الشحن
+
+⸻
+
+6. Core Modules – MVP
+
+⸻
+
+🧩 1. Authentication Module
+
+Features:
+	•	Login
+	•	Logout
+	•	Role-based access
+
+Rules:
+	•	JWT Token
+	•	Session stored in browser
+	•	Redirect حسب الدور
+
+⸻
+
+🧩 2. Company Setup Module
+
+Purpose:
+تهيئة شركة الشحن لأول مرة
+
+Fields:
+	•	Company Name
+	•	Logo (اختياري)
+	•	Default Shipping Price
+	•	Cities Covered
+
+⸻
+
+🧩 3. Customer Management
+
+Features:
+	•	Add Customer
+	•	Edit Customer
+	•	View Customer Orders
+
+Customer Fields:
+	•	Name
+	•	Phone
+	•	Address
+	•	City
+	•	Notes
+
+⸻
+
+🧩 4. Shipment Management (Core of MVP)
+
+Shipment Lifecycle:
+	1.	Created
+	2.	Assigned
+	3.	Out for Delivery
+	4.	Delivered
+	5.	Returned (اختياري)
+
+Shipment Fields:
+	•	Tracking ID (Auto)
+	•	Customer
+	•	City
+	•	COD Amount
+	•	Shipping Price
+	•	Status
+	•	Notes
+
+Features:
+	•	Create Shipment
+	•	Update Status
+	•	Filter by Status
+	•	Search by Tracking ID / Phone
+
+⸻
+
+🧩 5. Basic Financial Overview
+
+MVP Level (Very Simple):
+	•	Total Shipments
+	•	Delivered Shipments
+	•	Total COD Amount
+	•	Total Shipping Fees
+
+❌ لا يوجد:
+	•	Accounting System
+	•	Wallets
+	•	Payouts
+
+⸻
+
+🧩 6. Users Management
+	•	Add User
+	•	Assign Role
+	•	Activate / Deactivate
+
+⸻
+
+7. UI Pages Required (Explicit)
+	1.	Login Page
+	2.	Dashboard (KPIs)
+	3.	Shipments Page
+	4.	Add/Edit Shipment
+	5.	Customers Page
+	6.	Users Management
+	7.	Company Settings
+
+⸻
+
+8. Non-Functional Requirements (MVP)
+	•	Responsive Web (Desktop + Tablet)
+	•	Arabic UI (RTL)
+	•	Simple UX
+	•	No complex animations
+
+⸻
+
+9. Success Metrics (KPIs)
+
+يتم تقييم الـ MVP بناءً على:
+	•	هل شركة شحن حقيقية تستطيع استخدامه؟
+	•	هل دورة الشحنة واضحة؟
+	•	هل Owner يفهم البيانات بدون شرح؟
+
+⸻
+
+10. Future Scope (Not Now – Just Mentioned)
+	•	Merchant App
+	•	Courier App
+	•	AI Route Optimization
+	•	WhatsApp Notifications
+	•	Payments Integration
+	•	Flutter Mobile Apps
+
+⸻
+
+11. Instructions to AI Model (مهم جدًا)
+
+❗ المطلوب تنفيذ MVP فقط
+❗ لا تضيف Features غير مذكورة
+❗ استخدم Backend APIs الحالية
+❗ ركز على الاستقرار وليس التوسع

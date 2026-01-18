@@ -1,0 +1,221 @@
+🧩 MVP Execution Tasks
+باستخدام مستودع “shipping-backend” الحالي ك backend ، وقم بحذف كل محتوي مستودع  “Shipex-App” لانشاء المشروع الجديد بداخله.
+Shipex – Shipping Management System (Web MVP)
+
+⸻
+
+🔹 TASK 0 – Project Initialization (Mandatory)
+الهدف: تجهيز مشروع Frontend نظيف ومترابط مع الـ Backend الحالي.
+المطلوب:
+	•	إنشاء Next.js Project
+	•	إعداد:
+	•	ESLint
+	•	Folder Structure واضح
+	•	إعداد Environment Variables:
+	•	API_BASE_URL
+	•	إعداد HTTP Client (Axios أو Fetch Wrapper)
+القيود:
+	•	❌ لا Authentication Logic هنا
+	•	❌ لا UI معقد
+
+⸻
+
+🔹 TASK 1 – Authentication & Authorization
+
+الهدف: تسجيل الدخول والتحكم في الصلاحيات.
+
+Features:
+	•	Login Page
+	•	JWT Token Handling
+	•	Protected Routes
+	•	Role-based Redirect
+
+المطلوب تنفيذه:
+	•	Login Form:
+	•	Email
+	•	Password
+	•	حفظ Token في:
+	•	LocalStorage أو Cookies
+	•	Middleware / Guard:
+	•	Owner
+	•	Admin
+
+مخرجات task:
+	•	مستخدم يستطيع الدخول
+	•	لا يستطيع رؤية صفحات غير مصرح له بها
+
+⸻
+
+🔹 TASK 2 – Base Layout & Navigation
+
+الهدف: هيكل UI ثابت لكل النظام.
+
+المطلوب:
+	•	Main Layout:
+	•	Sidebar
+	•	Topbar
+	•	Navigation Links:
+	•	Dashboard
+	•	Shipments
+	•	Customers
+	•	Users
+	•	Settings
+	•	RTL Support
+
+القيود:
+	•	❌ لا Animations
+	•	❌ لا Theme Switching
+
+⸻
+
+🔹 TASK 3 – Company Setup Module
+
+الهدف: إعداد بيانات شركة الشحن.
+
+Features:
+	•	View Company Info
+	•	Edit Company Info
+
+Fields:
+	•	Company Name
+	•	Logo (اختياري)
+	•	Default Shipping Price
+	•	Cities Covered
+
+Rules:
+	•	شركة واحدة فقط
+	•	لا Multi-Company
+
+⸻
+
+🔹 TASK 4 – Users Management
+
+الهدف: إدارة موظفي الشركة.
+
+Features:
+	•	List Users
+	•	Add User
+	•	Edit User
+	•	Activate / Deactivate
+
+Roles:
+	•	Owner
+	•	Admin
+
+قيود:
+	•	❌ لا Password Reset
+	•	❌ لا Permissions معقدة
+
+⸻
+
+🔹 TASK 5 – Customers Management
+
+الهدف: إدارة العملاء المستلمين.
+
+Features:
+	•	Create Customer
+	•	Edit Customer
+	•	View Customer Details
+	•	List Customer Shipments
+
+Fields:
+	•	Name
+	•	Phone
+	•	Address
+	•	City
+	•	Notes
+
+⸻
+
+🔹 TASK 6 – Shipments Core Module (أهم Task)
+
+الهدف: تنفيذ دورة الشحنة كاملة.
+
+Shipment Lifecycle:
+	1.	Created
+	2.	Assigned
+	3.	Out for Delivery
+	4.	Delivered
+	5.	Returned (Optional)
+
+Features:
+	•	Create Shipment
+	•	Edit Shipment
+	•	Update Status
+	•	Search:
+	•	Tracking ID
+	•	Phone
+	•	Filter:
+	•	By Status
+	•	By City
+
+Shipment Fields:
+	•	Tracking ID (Auto)
+	•	Customer
+	•	City
+	•	COD Amount
+	•	Shipping Fees
+	•	Status
+	•	Notes
+
+⸻
+
+🔹 TASK 7 – Dashboard (Basic KPIs)
+
+الهدف: عرض نظرة عامة سريعة.
+
+KPIs:
+	•	Total Shipments
+	•	Delivered Shipments
+	•	Returned Shipments
+	•	Total COD Amount
+	•	Total Shipping Fees
+
+قيود:
+	•	❌ لا Charts معقدة
+	•	❌ لا Date Filters متقدمة
+
+⸻
+
+🔹 TASK 8 – UI Validation & UX Simplification
+
+الهدف: التأكد أن النظام قابل للاستخدام فعليًا.
+
+المطلوب:
+	•	Form Validation
+	•	Error Handling
+	•	Loading States
+	•	Empty States
+
+⸻
+
+🔹 TASK 9 – Arabic & RTL Finalization
+
+الهدف: تجربة عربية حقيقية.
+
+المطلوب:
+	•	ترجمة جميع النصوص
+	•	RTL كامل
+	•	أرقام عربية / إنجليزية حسب الإعداد
+
+⸻
+
+🔹 TASK 10 – MVP Final Review & Testing
+
+الهدف: جاهزية الاختبار مع شركة حقيقية.
+
+Checklist:
+	•	Login يعمل
+	•	CRUD كامل
+	•	لا Bugs Blocking
+	•	UX واضح بدون شرح
+⸻
+🚫 Explicitly Forbidden for AI Model
+
+❌ Mobile App
+❌ Flutter
+❌ Payment Integration
+❌ AI Features
+❌ Notifications
+❌ Multi-Company
+❌ Analytics متقدمة

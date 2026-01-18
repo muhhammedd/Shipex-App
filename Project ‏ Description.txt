@@ -1,0 +1,13 @@
+Project Description
+
+This project is a SaaS-based Shipping Management System designed to manage and operate shipping and delivery companies through a single unified platform.
+
+The system consists of three main applications:
+	1.	Merchant Mobile App – for creating shipments, tracking orders, viewing delivery status, managing COD payments, and communicating with the shipping company.
+	2.	Courier (Driver) Mobile App – for receiving delivery tasks, navigating routes, updating order statuses, collecting payments, and syncing real-time delivery data.
+	3.	Admin Web Dashboard – for full system management, including merchants, couriers, shipments, pricing, branches, reports, permissions, and financial settlements.
+
+The platform supports role-based access, real-time tracking, order lifecycle management, COD handling, notifications, and multi-branch operations.
+It is built to be scalable, secure, and API-first, with a centralized backend and database serving all clients.
+
+The system must fully support Arabic (RTL) and be optimized for use in the Middle East shipping market, with flexibility to expand globally in the future.
