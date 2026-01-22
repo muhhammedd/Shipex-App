@@ -1,9 +1,9 @@
-import { dashboardStats, ordersIntelligence, revenueIntelligence } from '../src/lib/mock/dashboard'
-import { ordersMock } from '../src/lib/mock/orders'
+import { dashboardStats, ordersIntelligence, revenueIntelligence } from '../../lib/mock/dashboard'
+import { mockOrders as ordersMock } from '../../lib/mock/orders'
 
-import { StatCard } from '../src/components/ui/StatCard'
-import { OrderCard } from '../src/components/domain/order/OrderCard'
-import { IntelligenceCard } from '../src/components/dashboard/IntelligenceCard'
+import { StatCard } from '../../components/ui/StatCard'
+import { OrderCard } from '../../components/domain/order/OrderCard'
+import { IntelligenceCard } from '../../components/dashboard/IntelligenceCard'
 
 export default function AdminDashboardPage() {
   return (

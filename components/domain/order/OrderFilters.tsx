@@ -1,17 +1,23 @@
 "use client";
 
+import { useState } from "react";
+
 interface OrderFiltersProps {
   onFilterChange?: (filters: { search: string; status: string; date: string }) => void;
 }
 
 export function OrderFilters({ onFilterChange }: OrderFiltersProps) {
+  const [filters, setFilters] = useState({
+    search: '',
+    status: 'ALL',
+    date: ''
+  });
+
   const handleChange = (field: string, value: string) => {
+    const newFilters = { ...filters, [field]: value };
+    setFilters(newFilters);
     if (onFilterChange) {
-      onFilterChange({
-        search: field === 'search' ? value : '',
-        status: field === 'status' ? value : 'ALL',
-        date: field === 'date' ? value : ''
-      });
+      onFilterChange(newFilters);
     }
   };
 

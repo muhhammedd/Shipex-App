@@ -1,5 +1,6 @@
 export type OrderStatus =
   | 'CREATED'
+  | 'PENDING'
   | 'ASSIGNED'
   | 'PICKED_UP'
   | 'IN_TRANSIT'

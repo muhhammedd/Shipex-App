@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { OrderFilters } from "../../../components/domain/order/OrderFilters";
 import { OrderRow } from "../../../components/domain/order/OrderRow";
-import { mockOrders } from "../../../lib/mock/orders";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { orderService, PaginatedResponse } from "../../../lib/services/orderService";
+import { Order } from "../../../types/order";
+import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 10;
 
 export default function OrdersPage() {
   const [filters, setFilters] = useState({
@@ -15,33 +16,33 @@ export default function OrdersPage() {
     date: ""
   });
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [response, setResponse] = useState<PaginatedResponse<Order> | null>(null);
 
-  const filteredOrders = useMemo(() => {
-    return mockOrders.filter(order => {
-      const matchesSearch = !filters.search || 
-        order.trackingNumber.toLowerCase().includes(filters.search.toLowerCase()) ||
-        order.merchantName.toLowerCase().includes(filters.search.toLowerCase()) ||
-        order.recipientName.toLowerCase().includes(filters.search.toLowerCase());
-      
-      const matchesStatus = filters.status === "ALL" || order.status === filters.status;
-      
-      const matchesDate = !filters.date || 
-        new Date(order.createdAt).toISOString().split('T')[0] === filters.date;
+  const fetchOrders = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await orderService.getOrders(filters as any, currentPage, ITEMS_PER_PAGE);
+      setResponse(res);
+    } catch (error) {
+      console.error("Failed to fetch orders:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [filters, currentPage]);
 
-      return matchesSearch && matchesStatus && matchesDate;
-    });
-  }, [filters]);
-
-  const totalPages = Math.ceil(filteredOrders.length / ITEMS_PER_PAGE);
-  const paginatedOrders = filteredOrders.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
+  useEffect(() => {
+    fetchOrders();
+  }, [fetchOrders]);
 
   const handleFilterChange = (newFilters: any) => {
-    setFilters(prev => ({ ...prev, ...newFilters }));
+    setFilters(newFilters);
     setCurrentPage(1);
   };
+
+  const orders = response?.data || [];
+  const totalPages = response?.totalPages || 0;
+  const totalResults = response?.total || 0;
 
   return (
     <div className="space-y-6">
@@ -74,8 +75,17 @@ export default function OrdersPage() {
             </thead>
 
             <tbody>
-              {paginatedOrders.length > 0 ? (
-                paginatedOrders.map((order) => (
+              {loading ? (
+                <tr>
+                  <td colSpan={7} className="px-4 py-12 text-center">
+                    <div className="flex flex-col items-center justify-center gap-2 text-gray-400">
+                      <Loader2 className="h-8 w-8 animate-spin text-accent" />
+                      <p>Loading orders...</p>
+                    </div>
+                  </td>
+                </tr>
+              ) : orders.length > 0 ? (
+                orders.map((order) => (
                   <OrderRow key={order.id} order={{
                     id: order.trackingNumber,
                     merchantName: order.merchantName,
@@ -96,22 +106,22 @@ export default function OrdersPage() {
           </table>
         </div>
 
-        {totalPages > 1 && (
+        {totalPages > 0 && (
           <div className="flex items-center justify-between border-t border-primary/20 bg-primary/40 px-4 py-3">
             <div className="text-sm text-gray-400">
-              Showing <span className="font-medium text-white">{((currentPage - 1) * ITEMS_PER_PAGE) + 1}</span> to <span className="font-medium text-white">{Math.min(currentPage * ITEMS_PER_PAGE, filteredOrders.length)}</span> of <span className="font-medium text-white">{filteredOrders.length}</span> results
+              Showing <span className="font-medium text-white">{totalResults === 0 ? 0 : ((currentPage - 1) * ITEMS_PER_PAGE) + 1}</span> to <span className="font-medium text-white">{Math.min(currentPage * ITEMS_PER_PAGE, totalResults)}</span> of <span className="font-medium text-white">{totalResults}</span> results
             </div>
             <div className="flex gap-2">
               <button
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
+                disabled={currentPage === 1 || loading}
                 className="flex h-8 w-8 items-center justify-center rounded border border-primary/20 bg-secondary text-gray-400 hover:text-white disabled:opacity-50"
               >
                 <ChevronRight className="h-4 w-4" />
               </button>
               <button
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                disabled={currentPage === totalPages}
+                disabled={currentPage === totalPages || loading}
                 className="flex h-8 w-8 items-center justify-center rounded border border-primary/20 bg-secondary text-gray-400 hover:text-white disabled:opacity-50"
               >
                 <ChevronLeft className="h-4 w-4" />
