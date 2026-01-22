@@ -1,21 +1,42 @@
-export function OrderFilters() {
+"use client";
+
+interface OrderFiltersProps {
+  onFilterChange?: (filters: { search: string; status: string; date: string }) => void;
+}
+
+export function OrderFilters({ onFilterChange }: OrderFiltersProps) {
+  const handleChange = (field: string, value: string) => {
+    if (onFilterChange) {
+      onFilterChange({
+        search: field === 'search' ? value : '',
+        status: field === 'status' ? value : 'ALL',
+        date: field === 'date' ? value : ''
+      });
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4 rounded-lg bg-secondary p-4 md:flex-row md:items-center">
       <input
         type="text"
         placeholder="Search orders..."
         className="w-full rounded-md bg-primary/60 px-4 py-2 text-sm text-white placeholder-gray-400 outline-none md:max-w-xs"
+        onChange={(e) => handleChange('search', e.target.value)}
       />
-      <select className="w-full rounded-md bg-primary/60 px-4 py-2 text-sm text-white outline-none md:max-w-xs">
-        <option value="">All Status</option>
-        <option value="Pending">Pending</option>
-        <option value="In Transit">In Transit</option>
-        <option value="Delivered">Delivered</option>
-        <option value="Cancelled">Cancelled</option>
+      <select 
+        className="w-full rounded-md bg-primary/60 px-4 py-2 text-sm text-white outline-none md:max-w-xs"
+        onChange={(e) => handleChange('status', e.target.value)}
+      >
+        <option value="ALL">All Status</option>
+        <option value="PENDING">Pending</option>
+        <option value="IN_TRANSIT">In Transit</option>
+        <option value="DELIVERED">Delivered</option>
+        <option value="CANCELLED">Cancelled</option>
       </select>
       <input
         type="date"
         className="w-full rounded-md bg-primary/60 px-4 py-2 text-sm text-white outline-none md:max-w-xs"
+        onChange={(e) => handleChange('date', e.target.value)}
       />
     </div>
   );
