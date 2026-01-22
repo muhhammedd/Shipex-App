@@ -1,4 +1,5 @@
 import { mockOrders } from '../mock/orders';
+import { mockMerchants, mockDrivers, mockZones } from '../mock/entities';
 import { Order, OrderStatus } from '../../types/order';
 
 export interface OrderFilters {
@@ -108,5 +109,20 @@ export const orderService = {
     // In a real app, we'd update the database here.
     // For mock purposes, we just return the updated object.
     return updatedOrder;
+  },
+
+  async getMerchants() {
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    return mockMerchants;
+  },
+
+  async getDrivers() {
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    return mockDrivers;
+  },
+
+  async getZones() {
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    return mockZones;
   }
 };

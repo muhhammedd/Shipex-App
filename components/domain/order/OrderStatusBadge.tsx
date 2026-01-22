@@ -3,6 +3,7 @@ import { OrderStatus } from '../../../types/order'
 
 const map: Record<OrderStatus, { label: string; variant: any }> = {
   CREATED: { label: 'Created', variant: 'info' },
+  PENDING: { label: 'Pending', variant: 'info' },
   ASSIGNED: { label: 'Assigned', variant: 'info' },
   PICKED_UP: { label: 'Picked Up', variant: 'warning' },
   IN_TRANSIT: { label: 'In Transit', variant: 'warning' },

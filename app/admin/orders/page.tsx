@@ -5,7 +5,8 @@ import { OrderFilters } from "../../../components/domain/order/OrderFilters";
 import { OrderRow } from "../../../components/domain/order/OrderRow";
 import { orderService, PaginatedResponse } from "../../../lib/services/orderService";
 import { Order } from "../../../types/order";
-import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Loader2, Download } from "lucide-react";
+import { Button } from "../../../components/ui/Button";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -46,15 +47,15 @@ export default function OrdersPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold">Orders</h1>
           <p className="mt-1 text-sm text-gray-500">Manage and track all orders</p>
         </div>
 
-        <button className="rounded-md bg-accent px-4 py-2 text-sm font-medium text-primary hover:opacity-90">
+        <Button variant="primary" size="sm" leftIcon={<Download className="h-4 w-4" />}>
           Export
-        </button>
+        </Button>
       </div>
 
       <OrderFilters onFilterChange={handleFilterChange} />
@@ -112,20 +113,24 @@ export default function OrdersPage() {
               Showing <span className="font-medium text-white">{totalResults === 0 ? 0 : ((currentPage - 1) * ITEMS_PER_PAGE) + 1}</span> to <span className="font-medium text-white">{Math.min(currentPage * ITEMS_PER_PAGE, totalResults)}</span> of <span className="font-medium text-white">{totalResults}</span> results
             </div>
             <div className="flex gap-2">
-              <button
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-8 w-8 p-0"
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1 || loading}
-                className="flex h-8 w-8 items-center justify-center rounded border border-primary/20 bg-secondary text-gray-400 hover:text-white disabled:opacity-50"
               >
                 <ChevronRight className="h-4 w-4" />
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-8 w-8 p-0"
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages || loading}
-                className="flex h-8 w-8 items-center justify-center rounded border border-primary/20 bg-secondary text-gray-400 hover:text-white disabled:opacity-50"
               >
                 <ChevronLeft className="h-4 w-4" />
-              </button>
+              </Button>
             </div>
           </div>
         )}

@@ -7,6 +7,7 @@ import { ArrowLeft, UserPlus, FileText, Loader2, CheckCircle2 } from "lucide-rea
 import Link from "next/link";
 import { OrderTimeline } from "../../../../components/domain/order/OrderTimeline";
 import { OrderStatusBadge } from "../../../../components/domain/order/OrderStatusBadge";
+import { Button } from "../../../../components/ui/Button";
 
 interface Props {
   params: { id: string };
@@ -99,20 +100,21 @@ export default function OrderDetailsPage({ params }: Props) {
             </div>
           )}
           
-          <button 
+          <Button 
+            variant="secondary"
+            leftIcon={<UserPlus className="h-4 w-4" />}
             onClick={handleAssignCourier}
-            className="flex items-center gap-2 rounded-md bg-secondary px-4 py-2 text-sm font-medium text-white hover:bg-secondary/80 transition-colors"
           >
-            <UserPlus className="h-4 w-4" /> Assign Courier
-          </button>
-          <button 
+            Assign Courier
+          </Button>
+          <Button 
+            variant="primary"
+            leftIcon={<FileText className="h-4 w-4" />}
+            isLoading={updating}
             onClick={handleUpdateStatus}
-            disabled={updating}
-            className="flex items-center gap-2 rounded-md bg-accent px-4 py-2 text-sm font-medium text-primary hover:opacity-90 transition-opacity disabled:opacity-50"
           >
-            {updating ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileText className="h-4 w-4" />}
             Update Status
-          </button>
+          </Button>
         </div>
       </div>
 

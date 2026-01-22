@@ -4,16 +4,24 @@ import { mockOrders as ordersMock } from '../../lib/mock/orders'
 import { StatCard } from '../../components/ui/StatCard'
 import { OrderCard } from '../../components/domain/order/OrderCard'
 import { IntelligenceCard } from '../../components/dashboard/IntelligenceCard'
+import { Button } from '../../components/ui/Button'
+import Link from 'next/link'
 
 export default function AdminDashboardPage() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold">لوحة المعلومات</h1>
-        <p className="mt-1 text-sm text-gray-500">
-          Overview of platform performance
-        </p>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-bold">لوحة المعلومات</h1>
+          <p className="mt-1 text-sm text-gray-500">
+            Overview of platform performance
+          </p>
+        </div>
+        <div className="flex gap-2">
+          <Button variant="outline" size="sm">Download Report</Button>
+          <Button variant="primary" size="sm">Create Order</Button>
+        </div>
       </div>
 
       {/* KPI */}
@@ -27,9 +35,9 @@ export default function AdminDashboardPage() {
       <div className="rounded-lg bg-secondary p-6">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-semibold">Recent Orders</h2>
-          <button className="rounded-md bg-accent px-4 py-2 text-sm font-medium text-primary">
-            View All
-          </button>
+          <Link href="/admin/orders">
+            <Button variant="accent" size="sm">View All</Button>
+          </Link>
         </div>
 
         <div className="grid gap-4 lg:grid-cols-3">

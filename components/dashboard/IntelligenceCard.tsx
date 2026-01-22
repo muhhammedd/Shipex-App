@@ -10,6 +10,8 @@ const highlightMap = {
   accent: 'text-accent',
 }
 
+import { ChartPlaceholder } from './ChartPlaceholder'
+
 export function IntelligenceCard({
   title,
   items,
@@ -36,8 +38,8 @@ export function IntelligenceCard({
         ))}
       </div>
 
-      <div className="mt-5 flex h-24 items-center justify-center rounded-md bg-primary/30 text-xs text-gray-400">
-        Chart placeholder
+      <div className="mt-5">
+        <ChartPlaceholder type={title.toLowerCase().includes('revenue') ? 'line' : 'bar'} height={120} />
       </div>
     </div>
   )

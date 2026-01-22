@@ -1,10 +1,18 @@
-# Project Status Update: Functional Milestone 1
+# Project Status Update: Functional Milestone 1 & 2
 
-This document summarizes the development work completed in response to the directive for the next functional milestone, focusing on extending the Orders Page, enhancing the Order Details Page, and preparing the project for seamless backend API integration.
+This document summarizes the development work completed for the Admin Dashboard, Orders Page, and Order Details Page, focusing on full frontend functionality, UI consistency, and readiness for backend API integration.
 
 ## Implemented Features
 
-### 1. Orders Data Service Layer (Backend Integration Preparation)
+### 1. Shared UI Component Library
+A centralized library of modular, reusable components has been established to ensure design consistency and ease of development across different roles (Admin, Merchant, Courier).
+
+*   **Button**: Support for multiple variants (primary, secondary, outline, ghost, accent), sizes, loading states, and icons.
+*   **Input**: Standardized text and date inputs with icon support and error states.
+*   **Select**: Custom-styled dropdowns for consistent form elements.
+*   **ChartPlaceholder**: Visual SVG-based placeholders for analytics charts (Line, Bar, Pie).
+
+### 2. Orders Data Service Layer (Backend Integration Preparation)
 
 A new service layer has been introduced to centralize data access, fulfilling the requirement for clear separation between the UI and data handling. This structure is designed to be easily replaced with a live API client in the future.
 
@@ -22,6 +30,7 @@ The main Orders Page has been refactored to support advanced data handling featu
 *   **Dynamic Filtering**: The `OrderFilters` component is now fully connected, allowing dynamic filtering of the mock dataset based on **search term**, **status**, and **date**. Filtering is performed within the `orderService` to simulate server-side filtering.
 *   **SSR Readiness**: The component logic is structured to easily transition from the mock service to a real data-fetching library (e.g., SWR, React Query) for SSR data fetching.
 *   **User Experience**: Added a loading spinner (`Loader2`) to indicate data fetching in progress.
+*   **UI Refinement**: Updated to use centralized `Button`, `Input`, and `Select` components for a more polished look.
 
 ### 3. Order Details Page Enhancement (`/admin/orders/[id]`)
 
@@ -46,6 +55,19 @@ The Order Details Page has been enhanced with a visual timeline and interactive 
 | `components/domain/order/OrderFilters.tsx` | Fixed filter state management and added missing `useState` import. | Orders Page Extension |
 | `app/admin/page.tsx` | Corrected relative import paths. | Codebase Consistency |
 
+### 4. Dashboard Enhancements (`/admin`)
+The main dashboard has been upgraded with interactive elements and improved visual hierarchy.
+
+*   **Interactive Widgets**: Stats cards and intelligence sections are now more dynamic.
+*   **Analytics Visuals**: Integrated `ChartPlaceholder` components into "Orders Intelligence" and "Revenue Intelligence" sections to provide a realistic data visualization feel.
+*   **Responsive Layout**: Optimized for mobile, tablet, and desktop views with RTL support maintained throughout.
+
+### 5. Mock Data Centralization
+Expanded the mock data architecture to support more entities.
+
+*   **New Entities**: Added `mockMerchants`, `mockDrivers`, and `mockZones` in `lib/mock/entities.ts`.
+*   **Service Expansion**: `orderService.ts` now includes methods for fetching these new entities, simulating a full-featured backend API.
+
 ## Conclusion
 
-The project is now at a functional milestone where the Orders and Order Details pages are robustly implemented with mock data, featuring advanced filtering, pagination, and interactive elements. The new service layer ensures the application is fully prepared for a smooth transition to live backend API integration.
+The project has reached a significant functional milestone. The Admin Dashboard, Orders, and Order Details pages are fully functional with mock data, featuring advanced filtering, pagination, interactive elements, and a robust shared component library. The architecture is clean, modular, and perfectly positioned for a smooth transition to live backend API integration.
