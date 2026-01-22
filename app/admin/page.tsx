@@ -13,8 +13,8 @@ export default function AdminDashboardPage() {
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold">لوحة المعلومات</h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <h1 className="text-2xl font-bold text-white">لوحة المعلومات</h1>
+          <p className="mt-1 text-sm text-gray-400">
             Overview of platform performance
           </p>
         </div>

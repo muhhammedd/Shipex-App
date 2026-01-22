@@ -30,7 +30,7 @@ export default function AdminLayout({
   ];
 
   return (
-    <div className="flex min-h-screen bg-background text-primary" dir="rtl">
+    <div className="flex min-h-screen bg-primary text-background" dir="rtl">
       {/* Sidebar */}
       <aside className="fixed inset-y-0 right-0 z-40 flex w-20 lg:w-64 flex-col bg-secondary">
         {/* Logo */}
@@ -72,22 +72,22 @@ export default function AdminLayout({
       </aside>
 
       {/* Main Area */}
-      <div className="mr-20 flex flex-1 flex-col lg:mr-64">
+      <div className="mr-20 flex flex-1 flex-col lg:mr-64 min-w-0">
         {/* Topbar */}
-        <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-primary/10 bg-background px-6">
-          <h1 className="text-lg font-semibold">
+        <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-white/5 bg-primary px-4 sm:px-6">
+          <h1 className="text-lg font-semibold truncate">
             Admin Dashboard
           </h1>
 
           {/* Placeholder for future actions */}
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-full bg-secondary" />
+            <div className="h-8 w-8 rounded-full bg-secondary flex-shrink-0" />
           </div>
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 bg-background">
-          <div className="mx-auto max-w-7xl p-6">
+        <main className="flex-1 bg-primary">
+          <div className="mx-auto max-w-7xl p-4 sm:p-6">
             {children}
           </div>
         </main>

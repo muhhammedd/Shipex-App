@@ -17,8 +17,8 @@
 }
 
 body {
-  background-color: #F6F6F6;
-  color: #111111;
+  background-color: #111111;
+  color: #F6F6F6;
 }
 
 @layer utilities {

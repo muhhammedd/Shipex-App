@@ -60,18 +60,18 @@ export default function OrdersPage() {
 
       <OrderFilters onFilterChange={handleFilterChange} />
 
-      <div className="overflow-hidden rounded-lg bg-secondary text-white">
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
+      <div className="overflow-hidden rounded-lg bg-secondary text-white border border-primary/10">
+        <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-primary/20">
+          <table className="w-full border-collapse min-w-[800px]">
             <thead className="bg-primary/60 text-sm text-gray-300">
               <tr>
-                <th className="px-4 py-3 text-right">Order ID</th>
-                <th className="px-4 py-3 text-right">Merchant</th>
-                <th className="px-4 py-3 text-right">Recipient</th>
-                <th className="px-4 py-3 text-right">Amount</th>
-                <th className="px-4 py-3 text-right">Status</th>
-                <th className="px-4 py-3 text-right">Date</th>
-                <th className="px-4 py-3 text-right">Action</th>
+                <th className="px-4 py-3 text-right font-semibold">Order ID</th>
+                <th className="px-4 py-3 text-right font-semibold">Merchant</th>
+                <th className="px-4 py-3 text-right font-semibold">Recipient</th>
+                <th className="px-4 py-3 text-right font-semibold">Amount</th>
+                <th className="px-4 py-3 text-right font-semibold">Status</th>
+                <th className="px-4 py-3 text-right font-semibold">Date</th>
+                <th className="px-4 py-3 text-right font-semibold">Action</th>
               </tr>
             </thead>
 

@@ -3,11 +3,12 @@
 import { useState, useEffect } from "react";
 import { orderService } from "../../../../lib/services/orderService";
 import { Order, OrderStatus } from "../../../../types/order";
-import { ArrowLeft, UserPlus, FileText, Loader2, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, UserPlus, FileText, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { OrderTimeline } from "../../../../components/domain/order/OrderTimeline";
 import { OrderStatusBadge } from "../../../../components/domain/order/OrderStatusBadge";
 import { Button } from "../../../../components/ui/Button";
+import { Toast } from "../../../../components/ui/Toast";
 
 interface Props {
   params: { id: string };
@@ -17,7 +18,7 @@ export default function OrderDetailsPage({ params }: Props) {
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
-  const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  const [toast, setToast] = useState<{ type: 'success' | 'error', message: string } | null>(null);
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -47,20 +48,17 @@ export default function OrderDetailsPage({ params }: Props) {
       const updated = await orderService.updateOrderStatus(order.id, nextStatus);
       if (updated) {
         setOrder(updated);
-        setMessage({ type: 'success', text: `Order status updated to ${nextStatus}` });
+        setToast({ type: 'success', message: `Order status updated to ${nextStatus}` });
       }
     } catch (error) {
-      setMessage({ type: 'error', text: "Failed to update order status" });
+      setToast({ type: 'error', message: "Failed to update order status" });
     } finally {
       setUpdating(false);
-      // Clear message after 3 seconds
-      setTimeout(() => setMessage(null), 3000);
     }
   };
 
   const handleAssignCourier = () => {
-    setMessage({ type: 'success', text: "Courier assignment modal would open here" });
-    setTimeout(() => setMessage(null), 3000);
+    setToast({ type: 'success', message: "Courier assignment modal would open here" });
   };
 
   if (loading) {
@@ -91,15 +89,6 @@ export default function OrderDetailsPage({ params }: Props) {
         </Link>
         
         <div className="flex items-center gap-3">
-          {message && (
-            <div className={`flex items-center gap-2 rounded-md px-3 py-1.5 text-xs font-medium ${
-              message.type === 'success' ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'
-            }`}>
-              {message.type === 'success' && <CheckCircle2 className="h-3.5 w-3.5" />}
-              {message.text}
-            </div>
-          )}
-          
           <Button 
             variant="secondary"
             leftIcon={<UserPlus className="h-4 w-4" />}
@@ -117,6 +106,14 @@ export default function OrderDetailsPage({ params }: Props) {
           </Button>
         </div>
       </div>
+
+      {toast && (
+        <Toast 
+          message={toast.message} 
+          type={toast.type} 
+          onClose={() => setToast(null)} 
+        />
+      )}
 
       <div className="rounded-lg bg-secondary p-6 text-white">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
