@@ -1,4 +1,4 @@
-import { OrderStatus } from '../../../types/order'
+import { OrderStatus } from '../../../types/models'
 
 export function OrderActions({
   currentStatus,

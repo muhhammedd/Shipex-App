@@ -1,28 +1,272 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    /* Light Mode Colors */
+    --primary: #035BCB;
+    --primary-dark: #024A9F;
+    --primary-light: #3A7FD5;
+    --secondary: #1A2629;
+    --secondary-light: #374151;
+    --success: #00B364;
+    --success-light: #10B981;
+    --warning: #FFA500;
+    --error: #DC2626;
+    --info: #0EA5E9;
+    --background: #F9F9F9;
+    --background-card: #FFFFFF;
+    --text-main: #1A2629;
+    --text-dim: #6B7280;
+    --border-color: #E5E7EB;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .dark {
+    /* Dark Mode Colors */
+    --primary: #035BCB;
+    --primary-dark: #024A9F;
+    --primary-light: #3A7FD5;
+    --secondary: #F9FAFB;
+    --secondary-light: #9CA3AF;
+    --success: #00B364;
+    --success-light: #10B981;
+    --warning: #FFA500;
+    --error: #DC2626;
+    --info: #0EA5E9;
+    --background: #0F1419;
+    --background-card: #1A2329;
+    --text-main: #F9FAFB;
+    --text-dim: #9CA3AF;
+    --border-color: #374151;
+    --shadow-color: rgba(0, 0, 0, 0.4);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-text-main dark:bg-background-dark dark:text-text-main-dark;
+    overflow-x: hidden;
+    min-height: 100vh;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  input,
+  select,
+  textarea {
+    @apply bg-background-card dark:bg-background-card-dark border border-border dark:border-border-dark text-text-main dark:text-text-main-dark;
+    transition: all 0.2s ease;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    @apply border-primary outline-none;
+    box-shadow: 0 0 0 3px rgba(3, 91, 203, 0.1);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    @apply text-text-dim dark:text-text-dim-dark;
+  }
+
+  ::selection {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold text-text-main dark:text-text-main-dark;
+    letter-spacing: -0.02em;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl;
+  }
+
+  h5 {
+    @apply text-lg md:text-xl;
+  }
+
+  h6 {
+    @apply text-base md:text-lg;
   }
 }
 
-body {
-  background-color: #111111;
-  color: #F6F6F6;
+@layer utilities {
+
+  /* Card Styles */
+  .card {
+    @apply bg-background-card dark:bg-background-card-dark border border-border dark:border-border-dark rounded-xl shadow-card dark:shadow-dark-card;
+    transition: all 0.3s ease;
+  }
+
+  .card-hover {
+    @apply card;
+    transition: all 0.2s ease;
+  }
+
+  .card-hover:hover {
+    @apply shadow-card-hover dark:shadow-dark-card;
+    transform: translateY(-2px);
+  }
+
+  /* Glass Card Effect */
+  .card-glass {
+    @apply bg-white/80 dark:bg-background-card-dark/80 backdrop-blur-md border border-border/50 dark:border-border-dark/50 rounded-xl shadow-glass;
+  }
+
+  /* Gradient Backgrounds */
+  .gradient-primary {
+    background: linear-gradient(135deg, #035BCB 0%, #024A9F 100%);
+  }
+
+  .gradient-success {
+    background: linear-gradient(135deg, #00B364 0%, #009050 100%);
+  }
+
+  .gradient-warning {
+    background: linear-gradient(135deg, #FFA500 0%, #CC8400 100%);
+  }
+
+  .gradient-card {
+    background: linear-gradient(135deg, rgba(3, 91, 203, 0.05) 0%, rgba(0, 179, 100, 0.05) 100%);
+  }
+
+  /* Text Gradients */
+  .text-gradient-primary {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #035BCB 0%, #3A7FD5 100%);
+  }
+
+  .text-gradient-success {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #00B364 0%, #33FFAF 100%);
+  }
+
+  /* Custom Scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary;
+  }
+
+  /* Shimmer Effect for Loading */
+  .shimmer {
+    background: linear-gradient(90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0) 100%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  .dark .shimmer {
+    background: linear-gradient(90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        rgba(255, 255, 255, 0) 100%);
+  }
+
+  /* Focus Visible */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background-dark;
+  }
+
+  /* Smooth Transitions */
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* Custom Scrollbar Global */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .animate-pulse-subtle {
+    animation: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse-subtle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  .shimmer-sweep {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shimmer-sweep::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%
+    );
+    animation: shimmer 3s infinite;
+  }
+
+  @keyframes shimmer {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(100%); }
   }
 }

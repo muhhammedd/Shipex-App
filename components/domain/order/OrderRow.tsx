@@ -1,26 +1,22 @@
-import { OrderStatus } from '../../../types/order';
+import { Order } from '../../../types/models';
 import { Eye } from 'lucide-react';
 import Link from 'next/link';
 import { OrderStatusBadge } from './OrderStatusBadge';
 
 interface OrderRowProps {
-  order: {
-    id: string;
-    merchantName: string;
-    recipientName: string;
-    amount: string;
-    status: OrderStatus;
-    createdAt: string;
-  }
+  order: Order;
 }
 
 export function OrderRow({ order }: OrderRowProps) {
   return (
     <tr className="border-t border-primary/20 text-sm hover:bg-primary/40">
       <td className="px-4 py-3 font-medium">{order.id}</td>
-      <td className="px-4 py-3">{order.merchantName}</td>
-      <td className="px-4 py-3">{order.recipientName}</td>
-      <td className="px-4 py-3">{order.amount}</td>
+      <td className="px-4 py-3">{order.merchant?.name || 'System'}</td>
+      <td className="px-6 py-4">
+        <div className="text-sm text-white">{order.recipientName}</div>
+        <div className="text-xs text-gray-500">{order.recipientCity}</div>
+      </td>
+      <td className="px-4 py-3">{order.shippingCost}</td>
       <td className="px-4 py-3">
         <OrderStatusBadge status={order.status} />
       </td>

@@ -1,4 +1,4 @@
-import { Order } from '../../../types/order'
+import { Order } from '../../../types/models'
 import { Card } from '../../ui/Card'
 import { OrderStatusBadge } from './OrderStatusBadge'
 
@@ -22,7 +22,7 @@ export function OrderCard({ order, role = 'admin' }: Props) {
       {/* Recipient */}
       <div className="text-sm text-gray-300">
         <p>{order.recipientName}</p>
-        <p className="text-xs">{order.city} – {order.address}</p>
+        <p className="text-xs">{order.recipientCity} – {order.recipientAddress}</p>
       </div>
 
       {/* Financial */}

@@ -1,4 +1,4 @@
-import { OrderHistory } from '../../../types/order'
+import { OrderHistory } from '../../../types/models'
 import { OrderStatusBadge } from './OrderStatusBadge'
 
 export function OrderTimeline({ history }: { history: OrderHistory[] }) {
@@ -9,9 +9,8 @@ export function OrderTimeline({ history }: { history: OrderHistory[] }) {
       <div className="relative space-y-8 before:absolute before:inset-0 before:ml-1 before:h-full before:w-0.5 before:bg-primary/20">
         {history.map((item, index) => (
           <div key={item.id} className="relative flex items-start gap-6">
-            <div className={`absolute -left-0.5 mt-1.5 h-3 w-3 rounded-full border-2 border-secondary ${
-              index === 0 ? 'bg-accent scale-125' : 'bg-gray-500'
-            }`} />
+            <div className={`absolute -left-0.5 mt-1.5 h-3 w-3 rounded-full border-2 border-secondary ${index === 0 ? 'bg-accent scale-125' : 'bg-gray-500'
+              }`} />
 
             <div className="flex-1">
               <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">

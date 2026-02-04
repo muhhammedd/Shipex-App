@@ -1,4 +1,4 @@
-import { Order } from '../../../types/order'
+import { Order } from '../../../types/models'
 import { OrderStatusBadge } from './OrderStatusBadge'
 
 export function OrderHeader({ order }: { order: Order }) {

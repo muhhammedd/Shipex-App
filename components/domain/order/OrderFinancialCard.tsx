@@ -1,4 +1,4 @@
-import { Order } from '../../../types/order'
+import { Order } from '../../../types/models'
 
 export function OrderFinancialCard({ order }: { order: Order }) {
   return (
@@ -7,8 +7,8 @@ export function OrderFinancialCard({ order }: { order: Order }) {
 
       <div className="flex justify-between text-sm">
         <div>
-          <p className="text-gray-400">Price</p>
-          <p className="font-bold">{order.price} EGP</p>
+          <p className="text-gray-400">Declared Value</p>
+          <p className="font-bold">{order.declaredValue} EGP</p>
         </div>
 
         <div>

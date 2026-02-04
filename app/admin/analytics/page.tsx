@@ -1,163 +1,162 @@
-"use client";
+'use client';
 
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-} from "recharts";
+import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+import { analyticsService } from '@/lib/services/analyticsService';
+import { AnalyticsResponse } from '@/types/api';
+import { Loading } from '@/components/ui/Loading';
+import { StatCard } from '@/components/ui/StatCard';
+import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Package, TrendingUp, DollarSign, Activity, Download, MapPin, Building2 } from 'lucide-react';
 
-const stats = [
-  { label: "Total Orders", value: "12,480" },
-  { label: "Delivered Orders", value: "10,930" },
-  { label: "Active Drivers", value: "86" },
-  { label: "Total Revenue", value: "EGP 420K" },
-];
-
-const chartData = [
-  { name: "Jan", orders: 820, revenue: 32000 },
-  { name: "Feb", orders: 940, revenue: 37000 },
-  { name: "Mar", orders: 1100, revenue: 42000 },
-  { name: "Apr", orders: 980, revenue: 39000 },
-  { name: "May", orders: 1250, revenue: 48000 },
-  { name: "Jun", orders: 1400, revenue: 55000 },
-];
-
-const topZones = [
-  { name: "Cairo", orders: 5200, revenue: "EGP 180K" },
-  { name: "Giza", orders: 3900, revenue: "EGP 130K" },
-  { name: "Alexandria", orders: 2400, revenue: "EGP 90K" },
-];
-
-const topMerchants = [
-  { name: "Fashion Store", orders: 2100, revenue: "EGP 75K" },
-  { name: "Electro Shop", orders: 1800, revenue: "EGP 62K" },
-  { name: "Beauty Hub", orders: 1500, revenue: "EGP 48K" },
-];
+const AnalyticsCharts = dynamic(
+  () => import('@/components/domain/analytics/AnalyticsCharts'),
+  {
+    loading: () => <div className="h-72 flex items-center justify-center bg-background-card/50 rounded-xl"><Loading text="Loading Charts..." /></div>,
+    ssr: false
+  }
+);
 
 export default function AnalyticsPage() {
+  const [data, setData] = useState<AnalyticsResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setIsLoading(true);
+        const response = await analyticsService.getAdminSummary();
+        setData(response);
+      } catch (error) {
+        console.error('Failed to load analytics:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadData();
+  }, []);
+
+  if (isLoading) return <Loading fullScreen text="Loading analytics..." />;
+  if (!data) return (
+    <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-4">
+      <Activity className="h-12 w-12 text-text-dim" />
+      <p className="text-text-dim">Data unavailable.</p>
+    </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-in fade-in duration-500 pb-20">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold">Analytics</h1>
-        <p className="mt-1 text-sm text-gray-500">
-          Business performance overview
-        </p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+          <h1 className="text-3xl font-bold text-text-main dark:text-text-main-dark tracking-tight">
+            System Analytics
+          </h1>
+          <p className="text-text-dim mt-2">
+            Comprehensive overview of platform performance and revenue.
+          </p>
+        </div>
+        <Button variant="outline" leftIcon={<Download className="h-4 w-4" />}>
+          Export Report
+        </Button>
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map((item) => (
-          <div
-            key={item.label}
-            className="rounded-lg bg-secondary p-5 text-white"
-          >
-            <p className="text-sm text-gray-400">{item.label}</p>
-            <p className="mt-2 text-2xl font-bold">{item.value}</p>
-          </div>
-        ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <StatCard
+          title="Total Orders"
+          value={data.summary.totalOrders.toLocaleString()}
+          icon={Package}
+          variant="primary"
+        />
+        <StatCard
+          title="Delivered"
+          value={data.summary.deliveredOrders.toLocaleString()}
+          icon={Activity}
+          variant="success"
+        />
+        <StatCard
+          title="Trend"
+          value={`${data.summary.recentTrend}%`}
+          icon={TrendingUp}
+          variant="warning"
+          trend={{ value: Number(data.summary.recentTrend), label: 'growth', isPositive: Number(data.summary.recentTrend) > 0 }}
+        />
+        <StatCard
+          title="Total Revenue"
+          value={`$${data.summary.totalRevenue.toLocaleString()}`}
+          icon={DollarSign}
+          variant="info"
+        />
       </div>
 
-      {/* Charts */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* Orders Chart */}
-        <div className="rounded-lg bg-secondary p-5 text-white">
-          <h3 className="mb-4 font-semibold">Orders Growth</h3>
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-                <XAxis dataKey="name" stroke="#aaa" />
-                <YAxis stroke="#aaa" />
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="orders"
-                  stroke="#FFCB74"
-                  strokeWidth={2}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+      {/* Charts (Lazy Loaded) */}
+      <Card variant="default" className="p-6">
+        <AnalyticsCharts orderVolume={data.orderVolume} revenueGrowth={data.revenueGrowth} />
+      </Card>
 
-        {/* Revenue Chart */}
-        <div className="rounded-lg bg-secondary p-5 text-white">
-          <h3 className="mb-4 font-semibold">Revenue</h3>
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-                <XAxis dataKey="name" stroke="#aaa" />
-                <YAxis stroke="#aaa" />
-                <Tooltip />
-                <Bar dataKey="revenue" fill="#FFCB74" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-      </div>
       {/* Performance Tables */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Top Zones */}
-        <div className="rounded-lg bg-secondary p-5 text-white">
-          <h3 className="mb-4 font-semibold">Top Zones</h3>
-
-          <table className="w-full text-sm">
-            <thead className="text-gray-400">
-              <tr>
-                <th className="pb-2 text-right">Zone</th>
-                <th className="pb-2 text-right">Orders</th>
-                <th className="pb-2 text-right">Revenue</th>
-              </tr>
-            </thead>
-            <tbody>
-              {topZones.map((zone) => (
-                <tr
-                  key={zone.name}
-                  className="border-t border-primary/20 hover:bg-primary/40"
-                >
-                  <td className="py-3 font-medium">{zone.name}</td>
-                  <td className="py-3">{zone.orders}</td>
-                  <td className="py-3">{zone.revenue}</td>
+        <Card variant="default" className="p-0 overflow-hidden">
+          <div className="p-6 border-b border-border dark:border-border-dark flex items-center gap-3">
+            <div className="p-2 bg-indigo-500/10 rounded-lg text-indigo-500">
+              <MapPin className="h-5 w-5" />
+            </div>
+            <h3 className="font-bold text-lg text-text-main dark:text-text-main-dark">Regional Performance</h3>
+          </div>
+          <div className="p-0">
+            <table className="w-full text-left border-collapse">
+              <thead className="bg-background-card dark:bg-background-card-dark">
+                <tr>
+                  <th className="py-3 px-6 text-xs font-semibold text-text-dim uppercase tracking-wider">Zone</th>
+                  <th className="py-3 px-6 text-xs font-semibold text-text-dim uppercase tracking-wider text-right">Volume</th>
+                  <th className="py-3 px-6 text-xs font-semibold text-text-dim uppercase tracking-wider text-right">Revenue</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="divide-y divide-border dark:divide-border-dark">
+                {(data.topZones || []).map((zone) => (
+                  <tr key={zone.name} className="group hover:bg-background/50 transition-colors">
+                    <td className="py-4 px-6 font-medium text-text-main dark:text-text-main-dark">{zone.name}</td>
+                    <td className="py-4 px-6 text-right font-mono text-sm text-text-dim">{zone.orders}</td>
+                    <td className="py-4 px-6 text-right font-bold text-text-main dark:text-text-main-dark">${(zone.revenue || 0).toLocaleString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card>
 
         {/* Top Merchants */}
-        <div className="rounded-lg bg-secondary p-5 text-white">
-          <h3 className="mb-4 font-semibold">Top Merchants</h3>
-
-          <table className="w-full text-sm">
-            <thead className="text-gray-400">
-              <tr>
-                <th className="pb-2 text-right">Merchant</th>
-                <th className="pb-2 text-right">Orders</th>
-                <th className="pb-2 text-right">Revenue</th>
-              </tr>
-            </thead>
-            <tbody>
-              {topMerchants.map((merchant) => (
-                <tr
-                  key={merchant.name}
-                  className="border-t border-primary/20 hover:bg-primary/40"
-                >
-                  <td className="py-3 font-medium">{merchant.name}</td>
-                  <td className="py-3">{merchant.orders}</td>
-                  <td className="py-3">{merchant.revenue}</td>
+        <Card variant="default" className="p-0 overflow-hidden">
+          <div className="p-6 border-b border-border dark:border-border-dark flex items-center gap-3">
+            <div className="p-2 bg-orange-500/10 rounded-lg text-orange-500">
+              <Building2 className="h-5 w-5" />
+            </div>
+            <h3 className="font-bold text-lg text-text-main dark:text-text-main-dark">Top Markets</h3>
+          </div>
+          <div className="p-0">
+            <table className="w-full text-left border-collapse">
+              <thead className="bg-background-card dark:bg-background-card-dark">
+                <tr>
+                  <th className="py-3 px-6 text-xs font-semibold text-text-dim uppercase tracking-wider">Merchant</th>
+                  <th className="py-3 px-6 text-xs font-semibold text-text-dim uppercase tracking-wider text-right">Volume</th>
+                  <th className="py-3 px-6 text-xs font-semibold text-text-dim uppercase tracking-wider text-right">Revenue</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="divide-y divide-border dark:divide-border-dark">
+                {(data.topMerchants || []).map((merchant) => (
+                  <tr key={merchant.name} className="group hover:bg-background/50 transition-colors">
+                    <td className="py-4 px-6 font-medium text-text-main dark:text-text-main-dark">{merchant.name}</td>
+                    <td className="py-4 px-6 text-right font-mono text-sm text-text-dim">{merchant.orders}</td>
+                    <td className="py-4 px-6 text-right font-bold text-text-main dark:text-text-main-dark">${(merchant.revenue || 0).toLocaleString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card>
       </div>
     </div>
   );
